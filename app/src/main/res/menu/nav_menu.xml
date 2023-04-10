@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/firstOption"
+        android:title="Favorite Books"/>
+    <item
+        android:id="@+id/secondOption"
+        android:title="I have to read"/>
+    <item
+        android:id="@+id/thirdOption"
+        android:title="I read"/>
+    <item
+        android:id="@+id/lastOption"
+        android:title="Favorite Books"/>
+</menu>
