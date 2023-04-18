@@ -2,4 +2,18 @@
     <string name="app_name">BookLover</string>
     <string name="open_menu">Open</string>
     <string name="close_menu">Close</string>
+    <string name="password">Password</string>
+    <string name="confirmation_password">Confirmation Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_here">Login here</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="login_into_your_account">Login into your account</string>
+    <string name="login">Login</string>
+    <string name="don_t_you_have_an_account">Don\'t you have an account?</string>
+    <string name="register_now">Register now</string>
+    <string name="phone_number">Phone number</string>
 </resources>

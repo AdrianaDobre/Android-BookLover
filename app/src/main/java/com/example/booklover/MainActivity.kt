@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.example.booklover.databinding.ActivityMainBinding
 
@@ -15,14 +16,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 //        setContentView(R.layout.activity_main)
         setContentView(binding.root)
+
         binding.apply {
-            toggle = ActionBarDrawerToggle(this@MainActivity,drawerLayout, R.string.open_menu, R.string.close_menu)
+            setSupportActionBar(toolbar)
+            toggle = ActionBarDrawerToggle(this@MainActivity,drawerLayout,toolbar, R.string.open_menu, R.string.close_menu)
+
             drawerLayout.addDrawerListener(toggle)
             toggle.syncState()
 
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            navView.setNavigationItemSelectedListener {
+            navigationView.setNavigationItemSelectedListener {
                 when(it.itemId){
                     R.id.firstOption->{
                         Toast.makeText(this@MainActivity, "First option", Toast.LENGTH_SHORT).show()
