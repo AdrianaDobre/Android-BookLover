@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:paddingTop="40dp"
+        android:textSize="20sp"
+        android:hint="@string/title"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:inputType="text"
+        android:layout_height="wrap_content"
+        android:hint="@string/description"/>
+
+    <EditText
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:hint="@string/author"/>
+
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:hint="@string/comment"/>
+
+    <EditText
+        android:id="@+id/review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:inputType="number"
+        android:hint="@string/review"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:id="@+id/edit_button"
+        android:text="@string/edit"
+        android:textSize="16sp"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:id="@+id/delete_button"
+        android:text="@string/delete"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

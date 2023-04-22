@@ -26,6 +26,7 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 //        setContentView(R.layout.activity_login)
+        println("djdhdhhdhdhdhdhdhdhdhdhdhdhd")
 
         val email: EditText = binding.email
         val password: EditText = binding.password
@@ -49,7 +50,9 @@ class Login : AppCompatActivity() {
                             if (user != null && user.password == passwordTxt){
                                 Toast.makeText(this@Login, "Successfully logged in", Toast.LENGTH_SHORT).show()
 
-                                startActivity(Intent(this@Login, MainActivity::class.java))
+                                startActivity(Intent(this@Login, MainActivity::class.java).apply {
+                                    putExtra("userId", userSnapshot.key)
+                                })
                                 finish()
                             }
                             else{
