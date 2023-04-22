@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.booklover.databinding.FragmentBooksBinding
 import com.example.booklover.models.Book
@@ -31,7 +30,8 @@ class BooksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         databaseReference = (activity as MainActivity).databaseReference
-        adapter = CustomAdapter {book ->
+        adapter = CustomAdapter (
+            onItemClick = { book ->
             val bundle = Bundle()
             bundle.putString(BOOK_ID,book.id ?: "")
 
@@ -42,7 +42,8 @@ class BooksFragment : Fragment() {
                 .replace(R.id.fragment_container, fragment, null)
                 .addToBackStack(null)
                 .commit()
-        }
+        },
+            onCheckBox = { })
 
         binding.recyclerView.adapter = adapter
 
@@ -66,10 +67,11 @@ class BooksFragment : Fragment() {
                     val item = snapshot.getValue(Book::class.java)
                     if (item != null) {
                         item.id = snapshot.key
+                        item.selected = snapshot.child("selected").value.toString().toBoolean()
                         item.let { items.add(it) }
                     }
                 }
-                adapter.update(items)
+                adapter.update(items, userId)
                 requireActivity().supportFragmentManager.popBackStack()
             }
 

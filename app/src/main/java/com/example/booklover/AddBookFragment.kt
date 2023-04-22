@@ -53,6 +53,8 @@ class AddBookFragment : Fragment() {
                             booksReference.child("books").child(bookId).child("author").setValue(binding.author.text.toString())
                             booksReference.child("books").child(bookId).child("comment").setValue(binding.comment.text.toString())
                             booksReference.child("books").child(bookId).child("review").setValue(binding.review.text.toString().toInt())
+                            booksReference.child("books").child(bookId).child("selected").setValue(false)
+
 
                             Toast.makeText(requireContext(), "Book added successfully", Toast.LENGTH_SHORT).show()
                         }
