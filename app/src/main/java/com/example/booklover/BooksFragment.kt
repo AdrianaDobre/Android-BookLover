@@ -1,14 +1,19 @@
 package com.example.booklover
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.booklover.databinding.FragmentBooksBinding
 import com.example.booklover.models.Book
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 const val BOOK_ID = "book_id"
 
@@ -16,7 +21,9 @@ class BooksFragment : Fragment() {
     lateinit var binding: FragmentBooksBinding
     lateinit var userId: String
     lateinit var adapter: CustomAdapter
+    lateinit var searchView: SearchView
     lateinit var databaseReference: DatabaseReference
+    private lateinit var bookList: MutableList<Book>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +35,20 @@ class BooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bookList = mutableListOf()
+        searchView = binding.searchView
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false;
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true;
+            }
+
+        })
         databaseReference = (activity as MainActivity).databaseReference
         adapter = CustomAdapter (
             onItemClick = { book ->
@@ -39,7 +59,7 @@ class BooksFragment : Fragment() {
             fragment.arguments = bundle
 
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment, null)
+                .replace(R.id.nav_host_fragment, fragment, null)
                 .addToBackStack(null)
                 .commit()
         },
@@ -49,9 +69,27 @@ class BooksFragment : Fragment() {
 
         binding.floatingAdd.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, AddBookFragment::class.java, null)
+                .replace(R.id.nav_host_fragment, AddBookFragment::class.java, null)
                 .addToBackStack(null)
                 .commit()
+        }
+
+        binding.shareBooks.setOnClickListener{
+            val titleList = bookList.filter { it.title != null }.map { it.title!! }
+            val titles = titleList.joinToString("\n")
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra("Share books",titles)
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share books"))
+        }
+    }
+
+    private fun filterList(text: String?) {
+        val filteredList = bookList.filter { it.title?.contains(text ?: "", ignoreCase = true) ?: false }
+        if (filteredList.isNotEmpty()){
+            adapter.update(filteredList, userId)
         }
     }
 
@@ -62,16 +100,16 @@ class BooksFragment : Fragment() {
 
         booksReference.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val items = mutableListOf<Book>()
+                bookList = mutableListOf<Book>()
                 for (snapshot in dataSnapshot.children) {
                     val item = snapshot.getValue(Book::class.java)
                     if (item != null) {
                         item.id = snapshot.key
                         item.selected = snapshot.child("selected").value.toString().toBoolean()
-                        item.let { items.add(it) }
+                        item.let { bookList.add(it) }
                     }
                 }
-                adapter.update(items, userId)
+                adapter.update(bookList, userId)
                 requireActivity().supportFragmentManager.popBackStack()
             }
 

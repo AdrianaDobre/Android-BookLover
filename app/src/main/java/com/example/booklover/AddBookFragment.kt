@@ -35,7 +35,7 @@ class AddBookFragment : Fragment() {
         databaseReference = (activity as MainActivity).databaseReference
         binding.button.setOnClickListener {
             if (binding.title.text.toString().isEmpty() || binding.author.text.toString().isEmpty()){
-                Toast.makeText(requireContext(), "Please fill in the title and the author of the book!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Please fill in the title and the author of the book!", Toast.LENGTH_SHORT).show()
             } else{
                 val booksReference = databaseReference.child("users").child(userId)
 
@@ -44,19 +44,13 @@ class AddBookFragment : Fragment() {
                     val bookId: String = booksReference.child("books").push().key.toString()
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()){
-                            Toast.makeText(requireContext(), "Book already exits", Toast.LENGTH_SHORT).show()
-                        }
-                        else{
+                        if (!snapshot.exists()){
                             booksReference.child("books").child(bookId).child("title").setValue(binding.title.text.toString())
                             booksReference.child("books").child(bookId).child("description").setValue(binding.description.text.toString())
                             booksReference.child("books").child(bookId).child("author").setValue(binding.author.text.toString())
                             booksReference.child("books").child(bookId).child("comment").setValue(binding.comment.text.toString())
                             booksReference.child("books").child(bookId).child("review").setValue(binding.review.text.toString().toInt())
                             booksReference.child("books").child(bookId).child("selected").setValue(false)
-
-
-                            Toast.makeText(requireContext(), "Book added successfully", Toast.LENGTH_SHORT).show()
                         }
                         requireActivity().supportFragmentManager.popBackStack()
                     }

@@ -6,12 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.booklover.databinding.FragmentBookDetailsBinding
 import com.example.booklover.models.Book
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 class BookDetailsFragment : Fragment() {
     lateinit var binding: FragmentBookDetailsBinding
@@ -56,12 +57,6 @@ class BookDetailsFragment : Fragment() {
                                     binding.review.text =
                                         SpannableStringBuilder(data.review.toString())
                                 }
-                            } else {
-//                                Toast.makeText(
-//                                    requireView(),
-//                                    "There are no details about the book",
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
                             }
                         }
 
@@ -92,20 +87,11 @@ class BookDetailsFragment : Fragment() {
                     binding.deleteButton.setOnClickListener {
                         bookReference.removeValue()
                             .addOnSuccessListener {
-                                requireActivity().supportFragmentManager.popBackStack()
-                                val snackbar = Snackbar.make(
-                                    requireView(),
-                                    "Book successfully deleted",
-                                    Snackbar.LENGTH_SHORT
-                                )
-                                snackbar.setAction("Dismiss") {
-                                    snackbar.dismiss()
-                                }
-                                snackbar.show()
                             }
                             .addOnFailureListener { error ->
                                 Log.e(TAG, "Error deleting the book: ${error.message}")
                             }
+                        requireActivity().supportFragmentManager.popBackStack()
                     }
                 }
             }
