@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
             sharedPreferences.edit().putBoolean(KEY_SPLASH, true).apply()
         } else {
+            binding.bottomNavigationView.visibility = View.VISIBLE
             supportFragmentManager.beginTransaction()
                 .add(R.id.frame_layout, BooksFragment::class.java, null)
                 .commit()
