@@ -30,4 +30,6 @@
     <string name="delete">Delete</string>
     <string name="comment">Comment</string>
     <string name="review">Review</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
 </resources>

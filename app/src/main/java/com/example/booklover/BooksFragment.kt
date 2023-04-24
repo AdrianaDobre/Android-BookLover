@@ -59,7 +59,7 @@ class BooksFragment : Fragment() {
             fragment.arguments = bundle
 
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment, null)
+                .replace(R.id.frame_layout, fragment, null)
                 .addToBackStack(null)
                 .commit()
         },
@@ -69,7 +69,7 @@ class BooksFragment : Fragment() {
 
         binding.floatingAdd.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, AddBookFragment::class.java, null)
+                .replace(R.id.frame_layout, AddBookFragment::class.java, null)
                 .addToBackStack(null)
                 .commit()
         }
@@ -79,7 +79,7 @@ class BooksFragment : Fragment() {
             val titles = titleList.joinToString("\n")
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra("Share books",titles)
+                putExtra(Intent.EXTRA_TEXT,titles)
                 type = "text/plain"
             }
             startActivity(Intent.createChooser(shareIntent, "Share books"))
@@ -110,7 +110,7 @@ class BooksFragment : Fragment() {
                     }
                 }
                 adapter.update(bookList, userId)
-                requireActivity().supportFragmentManager.popBackStack()
+//                requireActivity().supportFragmentManager.popBackStack()
             }
 
             override fun onCancelled(error: DatabaseError) {

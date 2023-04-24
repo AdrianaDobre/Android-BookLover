@@ -1,5 +1,7 @@
 package com.example.booklover
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -24,56 +26,49 @@ import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var toggle: ActionBarDrawerToggle
     lateinit var userId: String
     lateinit var databaseReference: DatabaseReference
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
-    private lateinit var navController: NavController
+    lateinit var sharedPreferences: SharedPreferences
+    val KEY_SPLASH = "splash"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        drawerLayout = binding.drawerLayout
-        navView = binding.navigationView
+        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://booklover-96666-default-rtdb.firebaseio.com/")
+        databaseReference = FirebaseDatabase.getInstance()
+            .getReferenceFromUrl("https://booklover-96666-default-rtdb.firebaseio.com/")
 
         userId = intent.getStringExtra("userId").toString()
 
-        binding.apply {
-//            supportFragmentManager.beginTransaction()
-//                .add(R.id.nav_host_fragment, BooksFragment::class.java, null)
-//                .commit()
-
-            toggle = ActionBarDrawerToggle(this@MainActivity,drawerLayout, R.string.open_menu, R.string.close_menu)
-
-            drawerLayout.addDrawerListener(toggle)
-            toggle.syncState()
-
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-            navView.setNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.firstOption->{
-                        navController.navigate(R.id.homeFragment)
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
-                    R.id.secondOption->{
-                        navController.navigate(R.id.secondFragment)
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
-                }
-                true
-            }
+        if (!sharedPreferences.getBoolean(KEY_SPLASH, false)) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frame_layout, SplashFragment::class.java, null)
+                .commit()
+            sharedPreferences.edit().putBoolean(KEY_SPLASH, true).apply()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frame_layout, BooksFragment::class.java, null)
+                .commit()
         }
-    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> replaceFragment(BooksFragment())
+                R.id.profile -> replaceFragment(Profile())
+                else ->{
+                }
+            }
+            true
+        }
+
+    }
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout,fragment)
+        fragmentTransaction.commit()
     }
 }
