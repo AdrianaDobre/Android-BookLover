@@ -1,56 +1,62 @@
 package com.example.booklover
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.view.View
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.booklover.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var toggle: ActionBarDrawerToggle
+    lateinit var userId: String
+    lateinit var databaseReference: DatabaseReference
+    lateinit var sharedPreferences: SharedPreferences
+    val KEY_SPLASH = "splash"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(R.layout.activity_main)
         setContentView(binding.root)
 
-        binding.apply {
-            setSupportActionBar(toolbar)
-            toggle = ActionBarDrawerToggle(this@MainActivity,drawerLayout,toolbar, R.string.open_menu, R.string.close_menu)
+        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE)
 
-            drawerLayout.addDrawerListener(toggle)
-            toggle.syncState()
+        databaseReference = FirebaseDatabase.getInstance()
+            .getReferenceFromUrl("https://booklover-96666-default-rtdb.firebaseio.com/")
 
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        userId = intent.getStringExtra("userId").toString()
 
-            navigationView.setNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.firstOption->{
-                        Toast.makeText(this@MainActivity, "First option", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.secondOption->{
-                        Toast.makeText(this@MainActivity, "Second option", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.thirdOption->{
-                        Toast.makeText(this@MainActivity, "Third option", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.lastOption->{
-                        Toast.makeText(this@MainActivity, "Last option", Toast.LENGTH_SHORT).show()
-                    }
+        if (!sharedPreferences.getBoolean(KEY_SPLASH, false)) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frame_layout, SplashFragment::class.java, null)
+                .commit()
+            sharedPreferences.edit().putBoolean(KEY_SPLASH, true).apply()
+        } else {
+            binding.bottomNavigationView.visibility = View.VISIBLE
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frame_layout, BooksFragment::class.java, null)
+                .commit()
+        }
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.home -> replaceFragment(BooksFragment())
+                R.id.profile -> replaceFragment(Profile())
+                else ->{
                 }
-                true
             }
-
+            true
         }
+
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)){
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    private fun replaceFragment(fragment : Fragment){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout,fragment)
+        fragmentTransaction.commit()
     }
 }
