@@ -33,4 +33,6 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="test">test</string>
+    <string name="animate">Animate</string>
+    <string name="welcome_to_booklover">Welcome to BookLover</string>
 </resources>

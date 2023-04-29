@@ -110,7 +110,7 @@ class BooksFragment : Fragment() {
                     }
                 }
                 adapter.update(bookList, userId)
-//                requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().supportFragmentManager.popBackStack() // poate e de sters
             }
 
             override fun onCancelled(error: DatabaseError) {
