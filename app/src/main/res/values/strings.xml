@@ -35,4 +35,5 @@
     <string name="test">test</string>
     <string name="animate">Animate</string>
     <string name="welcome_to_booklover">Welcome to BookLover</string>
+    <string name="what_did_you_read_lately">What did you read lately?</string>
 </resources>
