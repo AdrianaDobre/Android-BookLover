@@ -22,7 +22,6 @@ class Register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-//        setContentView(R.layout.activity_register)
         setContentView(binding.root)
 
         val firstName: EditText = binding.firstName
@@ -82,6 +81,5 @@ class Register : AppCompatActivity() {
         loginNowBtn.setOnClickListener {
             finish()
         }
-
     }
 }

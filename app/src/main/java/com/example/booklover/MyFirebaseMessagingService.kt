@@ -33,6 +33,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     // generate the notification
+    // attach the notification created with the custom layout
+    // show the notification
     fun generateNotification(title: String, message: String){
         val intent = Intent(this, Login::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -57,6 +59,4 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         notificationManager.notify(0, builder.build())
     }
-    // attach the notification created with the custom layout
-    // show the notification
 }
