@@ -18,83 +18,101 @@
         android:layout_marginTop="0dp"
         android:text="@string/create_an_account"/>
 
-    <EditText
-        android:layout_width="400dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/firstName"
-        android:hint="@string/first_name"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        android:orientation="horizontal">
 
-    <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:id="@+id/lastName"
-        android:hint="@string/last_name"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/firstName"
+            android:hint="@string/first_name"
+            android:maxLines="1"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="50dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
 
-    <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:id="@+id/email"
-        android:hint="@string/email"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/lastName"
+            android:hint="@string/last_name"
+            android:maxLines="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
+    </LinearLayout>
 
-    <EditText
-        android:layout_width="400dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/password"
-        android:hint="@string/password"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        android:orientation="horizontal">
 
-    <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/conPassword"
-        android:hint="@string/confirmation_password"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email"
+            android:hint="@string/email"
+            android:maxLines="1"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
 
-    <EditText
-        android:layout_width="400dp"
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/password"
+            android:hint="@string/password"
+            android:maxLines="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:id="@+id/phone"
-        android:hint="@string/phone_number"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        android:paddingEnd="0dp"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/conPassword"
+            android:hint="@string/confirmation_password"
+            android:maxLines="1"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
+
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:id="@+id/phone"
+            android:hint="@string/phone_number"
+            android:maxLines="1"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:paddingEnd="0dp"/>
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerBtn"
