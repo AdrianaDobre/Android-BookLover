@@ -25,8 +25,6 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.activity_login)
-        println("djdhdhhdhdhdhdhdhdhdhdhdhdhd")
 
         val email: EditText = binding.email
         val password: EditText = binding.password
